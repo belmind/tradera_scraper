@@ -2,5 +2,10 @@
 
 
 A tool for scraping information from Tradera.se product pages given a specific search query. 
+The script uses BeautifulSoup 4.4 and Python 2.7 to scrape the data.
 
-The script uses BeautifulSoup 4.4 and Python 2.7 to scrape information from Tradera.
+## Screenshots
+<p> Search word 'Macbook Pro'.</p>
+<div style="display:block;float:left;">
+    <img src="img/img.png" height="400"/>
+</div>
