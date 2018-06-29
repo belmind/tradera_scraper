@@ -52,10 +52,12 @@ def main():
         bid_box = card_box = soup.find('span', attrs={'class': 'item-card-details-bids'})
 
         # A lot of printing
-        print('Sökord: ' + searchQuery + '. Typ av säljare: ' + seller )
+        print('Sökord: ' + searchQuery.replace('%20', ' ') + '. Typ av säljare: ' + seller )
         print('')
-        print '%0s  %14s %18s  %12s  %24s' % ('#', 'Tid Kvar', 'Antal Bud', 'Pris', 'Artikelnamn')
+        print '%0s  %16s %18s  %12s  %24s' % ('#', 'Tid Kvar', 'Antal Bud', 'Pris', 'Artikelnamn')
         print('------------------------------------------------------------------------------------------------------------------------------------')
+
+        ######## For loops to get the data we want and save it to arrays. ########
         # Get all the items
         for name_box in soup.find_all('h3', attrs={'class': 'item-card-details-header'}):
             items[ind] = name_box.text.strip()
@@ -70,7 +72,7 @@ def main():
 
         # Get number of bids
         for bid_box in soup.find_all('span', attrs={'class': 'item-card-details-bids'}):
-            bids[ind] = bid_box.text.strip()
+            bids[ind] = bid_box.text.strip().replace('bud', '') # Removes 'bud' from each bid
             ind += 1
         ind = 0
 
@@ -78,12 +80,12 @@ def main():
         for card_box in soup.find_all('span', attrs={'class': 'item-card-details-time-left'}):
             times[ind] = card_box.text.strip()
             ind += 1
-
+        #############################################################################
 
         #Output everything in a table
         for i in range(0,15):
             try:
-                    line_new = '%0s  %14s %16s  %16s  %5s' % (str(i+1) + '.', times[i], bids[i], prices[i], items[i])
+                    line_new = '%0s  %16s %16s  %16s  %5s' % (str(i+1) + '.', times[i], bids[i], prices[i], items[i])
                     print line_new
             except:
                 pass
