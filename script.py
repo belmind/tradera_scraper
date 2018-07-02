@@ -51,11 +51,19 @@ def main():
         time_box = soup.find('span', attrs={'class': 'item-card-details-time-left'})
         bid_box = card_box = soup.find('span', attrs={'class': 'item-card-details-bids'})
 
+        file = open(searchQuery + ".txt", "w")
         # A lot of printing
-        print('Sökord: ' + searchQuery.replace('%20', ' ') + '. Typ av säljare: ' + seller )
+        print'Sökord: ' + searchQuery.replace('%20',' ')
+        print'Typ av säljare: '  + seller + '.'
+        file.write('Sökord: ' + searchQuery.replace('%20',' \n'))
+        file.write('Typ av säljare: '  + seller + '.\n')
+
         print('')
+        file.write('\n')
         print '%0s  %16s %18s  %12s  %24s' % ('#', 'Tid Kvar', 'Antal Bud', 'Pris', 'Artikelnamn')
+        file.write('%0s  %16s %18s  %12s  %24s' % ('#', 'Tid Kvar', 'Antal Bud', 'Pris', 'Artikelnamn\n'))
         print('------------------------------------------------------------------------------------------------------------------------------------')
+        file.write('------------------------------------------------------------------------------------------------------------------------------------\n')
 
         ######## For loops to get the data we want and save it to arrays. ########
         # Get all the items
@@ -85,13 +93,22 @@ def main():
         #Output everything in a table
         for i in range(0,15):
             try:
-                    line_new = '%0s  %16s %16s  %16s  %5s' % (str(i+1) + '.', times[i], bids[i], prices[i], items[i])
+                    line_new = '%0s  %16s %16s  %16s  %5s' %( repr(i+1).encode('utf-8') + '.', times[i], bids[i], prices[i], items[i])
                     print line_new
+                    file.write(line_new + ' \n')
             except:
                 pass
-        # Funkar 100 % men då visas ej de andra artiklarna ex "21 Jul 12:22"
+
+
+
         print('------------------------------------------------------------------------------------------------------------------------------------')
         print 'Sökning utfördes:' + now.strftime(" %H:%M %d-%m-%Y")
+        print('Filen ' + searchQuery.replace('%20', '_')+ '.txt har skapats.')
+        file.write('------------------------------------------------------------------------------------------------------------------------------------\n')
+        file.write('Sökning utfördes:' + now.strftime(" %H:%M %d-%m-%Y"))
+        file.close()
+
+
         pass
 
 while(True):
